@@ -19,7 +19,6 @@ export const metadata: Metadata = {
   keywords:
     "workers, services, professional, welder, painter, skilled labor, hire workers, construction workers",
   authors: [{ name: "WorkerHub Team" }],
-  viewport: "width=device-width, initial-scale=1",
   robots: "index, follow",
   openGraph: {
     type: "website",
@@ -36,6 +35,11 @@ export const metadata: Metadata = {
     description:
       "Connect with verified professional workers for all your service needs.",
   },
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
