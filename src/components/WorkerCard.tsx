@@ -48,13 +48,13 @@ export default function WorkerCard({
       )} per day`}
     >
       {/* Image Section */}
-      <div className="w-full h-72 relative overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
+      <div className={cardStyles.imageContainer}>
         <Image
           src={worker.image}
           alt={`${worker.name} - ${worker.service}`}
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
-          className="object-cover object-center transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
+          className={cardStyles.image}
           priority={worker.id <= 12}
           quality={95}
           placeholder="blur"
@@ -62,21 +62,19 @@ export default function WorkerCard({
         />
 
         {/* Modern Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <div className={cardStyles.gradientOverlay} />
 
         {/* Decorative Corner */}
-        <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-primary-500/20 to-transparent rounded-bl-3xl" />
+        <div className={cardStyles.decorativeCorner} />
 
-        {/* Enhanced Service Badge */}
-        <div className="absolute top-4 right-4 transform group-hover:scale-105 transition-transform duration-300">
-          <span className="bg-white/95 backdrop-blur-md px-4 py-2 rounded-full text-xs font-bold text-gray-800 shadow-lg border border-white/30 ring-1 ring-gray-200/50">
-            {worker.service}
-          </span>
+        {/* Enhanced Service Badge with Better Contrast */}
+        <div className={cardStyles.serviceBadge}>
+          <span className={cardStyles.serviceBadgeInner}>{worker.service}</span>
         </div>
       </div>
 
       {/* Enhanced Content Section */}
-      <div className="p-4 relative">
+      <div className={cardStyles.contentContainer}>
         {/* Background Pattern */}
         <div className={cardStyles.contentBackground} />
 

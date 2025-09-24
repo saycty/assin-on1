@@ -48,11 +48,17 @@ export const cardStyles = {
   image:
     "object-cover object-center transition-all duration-700 group-hover:scale-110 group-hover:brightness-110",
 
-  // Service badge
+  // Image overlays and effects
+  gradientOverlay:
+    "absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300",
+  decorativeCorner:
+    "absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-primary-500/20 to-transparent rounded-bl-3xl",
+
+  // Service badge - high contrast design that works on all backgrounds
   serviceBadge:
     "absolute top-4 right-4 transform group-hover:scale-105 transition-transform duration-300",
   serviceBadgeInner:
-    "bg-white/95 backdrop-blur-md px-4 py-2 rounded-full text-xs font-bold text-gray-800 shadow-lg border border-white/30 ring-1 ring-gray-200/50",
+    "bg-black/80 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs font-bold text-white shadow-lg shadow-black/50 border border-white/20 group-hover:bg-primary-600/90 group-hover:shadow-primary-600/50 transition-all duration-300",
 
   // Content section
   contentContainer: "p-4 relative",
@@ -231,8 +237,13 @@ export const paginationStyles = {
   pageButton:
     "relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50",
   activePageButton: "z-10 bg-primary-50 border-primary-500 text-primary-600",
+  // Separate prev/next styles to avoid mixing left/right rounded corners
+  navButtonPrev:
+    "relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 disabled:opacity-50 disabled:cursor-not-allowed",
+  navButtonNext:
+    "relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 disabled:opacity-50 disabled:cursor-not-allowed",
   navButton:
-    "relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed",
+    "relative inline-flex items-center px-2 py-2 rounded-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed",
   dots: "relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700",
 };
 

@@ -1,4 +1,4 @@
-import { paginationStyles } from "@/styles/tailwind-utilities";
+import { paginationStyles, cn } from "@/styles/tailwind-utilities";
 
 interface PaginationProps {
   currentPage: number;
@@ -66,39 +66,39 @@ export default function Pagination({
   return (
     <nav className={paginationStyles.container} aria-label="Pagination">
       {/* Mobile Pagination */}
-      <div className="flex flex-1 justify-between sm:hidden">
+      <div className={paginationStyles.mobileContainer}>
         <button
           onClick={handlePrevious}
           disabled={currentPage === 1}
-          className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+          className={paginationStyles.mobileButton}
         >
           Previous
         </button>
-        <div className="flex items-center space-x-2">
-          <span className="text-sm text-gray-700">
+        <div className={paginationStyles.mobileInfo}>
+          <span className={paginationStyles.mobileText}>
             Page {currentPage} of {totalPages}
           </span>
         </div>
         <button
           onClick={handleNext}
           disabled={currentPage === totalPages}
-          className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+          className={cn(paginationStyles.mobileButton, "ml-3")}
         >
           Next
         </button>
       </div>
 
       {/* Desktop Pagination - Centered */}
-      <div className="hidden sm:flex">
+      <div className={paginationStyles.desktopContainer}>
         <nav
-          className="isolate inline-flex -space-x-px rounded-md shadow-sm"
+          className={cn("isolate inline-flex -space-x-px rounded-md shadow-sm")}
           aria-label="Pagination"
         >
           {/* Previous Button */}
           <button
             onClick={handlePrevious}
             disabled={currentPage === 1}
-            className="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 disabled:opacity-50 disabled:cursor-not-allowed"
+            className={paginationStyles.navButtonPrev}
             aria-label="Previous page"
           >
             <span className="sr-only">Previous</span>
@@ -117,32 +117,39 @@ export default function Pagination({
           </button>
 
           {/* Page Numbers */}
-          {getVisiblePages().map((page, index) => (
-            <button
-              key={index}
-              onClick={() => handlePageClick(page)}
-              disabled={page === "..."}
-              className={`relative inline-flex items-center px-4 py-2 text-sm font-semibold ${
-                page === currentPage
-                  ? "z-10 bg-primary-600 text-white focus:z-20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
-                  : page === "..."
-                  ? "text-gray-700 ring-1 ring-inset ring-gray-300 cursor-default"
-                  : "text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 cursor-pointer"
-              } transition-colors duration-200`}
-              aria-label={`${
-                page === currentPage ? "Current page, " : ""
-              }Page ${page}`}
-              aria-current={page === currentPage ? "page" : undefined}
-            >
-              {page}
-            </button>
-          ))}
+          {getVisiblePages().map((page, index) => {
+            const isActive = page === currentPage;
+            const isDots = page === "...";
+            const base = paginationStyles.pageButton;
+            const active = cn(
+              base,
+              paginationStyles.activePageButton,
+              "font-semibold"
+            );
+            const dotsClass = cn(paginationStyles.dots, "cursor-default");
+
+            return (
+              <button
+                key={index}
+                onClick={() => handlePageClick(page)}
+                disabled={isDots}
+                className={cn(
+                  "transition-colors duration-200",
+                  isActive ? active : isDots ? dotsClass : base
+                )}
+                aria-label={`${isActive ? "Current page, " : ""}Page ${page}`}
+                aria-current={isActive ? "page" : undefined}
+              >
+                {page}
+              </button>
+            );
+          })}
 
           {/* Next Button */}
           <button
             onClick={handleNext}
             disabled={currentPage === totalPages}
-            className="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 disabled:opacity-50 disabled:cursor-not-allowed"
+            className={paginationStyles.navButtonNext}
             aria-label="Next page"
           >
             <span className="sr-only">Next</span>
