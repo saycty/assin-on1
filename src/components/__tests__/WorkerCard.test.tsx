@@ -47,7 +47,8 @@ describe("WorkerCard", () => {
 
     const image = screen.getByAltText("John Doe - Plumber");
     expect(image).toBeInTheDocument();
-    expect(image).toHaveAttribute("src", mockWorker.image);
+    // Next.js Image transforms the src in test environment to a local resolver path
+    expect(image.getAttribute("src")).toMatch(/^\/_next\/image\?/);
   });
 
   it("calls onContact when contact button is clicked", () => {
