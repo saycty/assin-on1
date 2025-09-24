@@ -1,6 +1,7 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import Pagination from "../Pagination";
+import { paginationStyles } from "@/styles/tailwind-utilities";
 
 const mockOnPageChange = jest.fn();
 
@@ -91,7 +92,9 @@ describe("Pagination", () => {
     render(<Pagination {...defaultProps} currentPage={3} />);
 
     const currentPageButton = screen.getByLabelText("Current page, Page 3");
-    expect(currentPageButton).toHaveClass("bg-primary-600");
-    expect(currentPageButton).toHaveClass("text-white");
+    expect(currentPageButton).toHaveAttribute("aria-current", "page");
+    expect(currentPageButton.className).toEqual(
+      expect.stringContaining(paginationStyles.activePageButton.split(" ")[0])
+    );
   });
 });

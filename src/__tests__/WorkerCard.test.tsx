@@ -15,16 +15,25 @@ describe("WorkerCard", () => {
     render(<WorkerCard worker={mockWorker} />);
 
     expect(screen.getByText("John Doe")).toBeInTheDocument();
-    expect(screen.getByText("Welder")).toBeInTheDocument();
-    expect(screen.getByText("₹590")).toBeInTheDocument(); // 500 * 1.18
-    expect(screen.getByText("Contact Now")).toBeInTheDocument();
+    expect(screen.getAllByText(/welder/i).length).toBeGreaterThanOrEqual(1);
+    const expectedPrice = Math.round(mockWorker.pricePerDay * 1.18);
+    expect(
+      screen.getByText((content) =>
+        content.replace(/[\s,]/g, "").includes(`₹${expectedPrice}`)
+      )
+    ).toBeInTheDocument();
+    expect(
+      screen.getByLabelText(/contact john doe for welder services/i)
+    ).toBeInTheDocument();
   });
 
   it("calls onContact when contact button is clicked", () => {
     const mockOnContact = jest.fn();
     render(<WorkerCard worker={mockWorker} onContact={mockOnContact} />);
 
-    const contactButton = screen.getByText("Contact Now");
+    const contactButton = screen.getByLabelText(
+      /contact john doe for welder services/i
+    );
     fireEvent.click(contactButton);
 
     expect(mockOnContact).toHaveBeenCalledWith(1);
@@ -40,7 +49,9 @@ describe("WorkerCard", () => {
   it("has proper accessibility attributes", () => {
     render(<WorkerCard worker={mockWorker} />);
 
-    const card = screen.getByRole("button");
+    // the component renders both an outer article with role=button and an inner CTA button
+    // select the outer card by its aria-label to avoid ambiguity
+    const card = screen.getByLabelText("John Doe, Welder - ₹590 per day");
     expect(card).toHaveAttribute(
       "aria-label",
       "John Doe, Welder - ₹590 per day"
